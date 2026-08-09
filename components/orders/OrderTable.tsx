@@ -3,9 +3,14 @@ import type { Order } from "./OrderPage";
 type OrderTableProps = {
   orders: Order[];
   loading: boolean;
+  onStatusChange: (orderId: string, status: string) => void;
 };
 
-export default function OrderTable({ orders, loading }: OrderTableProps) {
+export default function OrderTable({
+  orders,
+  loading,
+  onStatusChange,
+}: OrderTableProps) {
   if (loading) {
     return (
       <section className="rounded-xl border border-slate-200 bg-white p-10 text-center shadow-sm">
@@ -102,17 +107,19 @@ export default function OrderTable({ orders, loading }: OrderTableProps) {
                   </td>
 
                   <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
-                        order.status === "PENDING"
-                          ? "bg-amber-50 text-amber-700"
-                          : order.status === "COMPLETED"
-                            ? "bg-emerald-50 text-emerald-700"
-                            : "bg-slate-100 text-slate-600"
-                      }`}
+                    <select
+                      value={order.status}
+                      onChange={(event) =>
+                        onStatusChange(order._id, event.target.value)
+                      }
+                      className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 outline-none focus:border-slate-500"
                     >
-                      {order.status}
-                    </span>
+                      <option value="PENDING">PENDING</option>
+                      <option value="CONFIRMED">CONFIRMED</option>
+                      <option value="SHIPPED">SHIPPED</option>
+                      <option value="DELIVERED">DELIVERED</option>
+                      <option value="CANCELLED">CANCELLED</option>
+                    </select>
                   </td>
 
                   <td className="px-6 py-4 text-slate-500">

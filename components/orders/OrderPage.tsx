@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import OrderTable from "./OrderTable";
 import OrderForm from "./OrderForm";
+import OrderTable from "./OrderTable";
+import { useEffect, useState } from "react";
 
 export type OrderItem = {
   productId: string;
@@ -44,6 +44,32 @@ export default function OrderPage() {
     fetchOrders();
   }, []);
 
+  async function handleStatusChange(orderId: string, status: string) {
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Failed to update order.");
+        return;
+      }
+
+      fetchOrders();
+    } catch (error) {
+      console.error("Failed to update order:", error);
+      alert("Something went wrong.");
+    }
+  }
+
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -73,7 +99,11 @@ export default function OrderPage() {
           />
         )}
 
-        <OrderTable orders={orders} loading={loading} />
+        <OrderTable
+          orders={orders}
+          loading={loading}
+          onStatusChange={handleStatusChange}
+        />
       </div>
     </main>
   );
