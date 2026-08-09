@@ -10,14 +10,6 @@ The application allows an admin to manage products and create customer orders wh
 * Add new products
 * Edit existing products
 * Delete products
-* Product fields:
-  * Name
-  * Description
-  * Price
-  * Stock
-  * Category
-  * Status
-* Basic form validation
 * Loading and empty states
 
 ### Order Management
@@ -34,13 +26,10 @@ The application allows an admin to manage products and create customer orders wh
 ## Tech Stack
 
 * **Next.js**
-* **React**
 * **TypeScript**
 * **Node.js**
 * **MongoDB**
-* **Mongoose**
 * **Tailwind CSS**
-* **Git & GitHub**
 * **Postman** for API testing
 
 ## Project Structure
@@ -105,18 +94,6 @@ models/
 | POST   | `/api/orders`     | Create an order     |
 | GET    | `/api/orders`     | Get all orders      |
 | PATCH  | `/api/orders/:id` | Update order status |
-
-## Database
-
-This implementation uses **MongoDB as the only database**.
-
-MongoDB stores:
-
-* Products
-* Orders
-* Order items
-
-Mongoose is used to define schemas and communicate with MongoDB.
 
 ### Product
 
@@ -232,37 +209,3 @@ Used to create, view, edit and delete products.
 ```
 
 Used to create and manage orders.
-
-## API Testing
-
-The APIs were tested using **Postman**.
-
-## Future Improvements
-
-The following features can be added if required:
-
-* PostgreSQL integration for order data
-* Multiple products in a single order through the UI
-* Product search
-* Product filtering
-* Dedicated `/orders/[id]` route
-* More advanced order status transition validation
-* Improved transaction handling across inventory and order operations
-* Authentication and authorization
-
-## Learning Outcomes
-
-This project demonstrates practical experience with:
-
-* Next.js App Router
-* React components
-* TypeScript
-* REST API development
-* MongoDB and Mongoose
-* CRUD operations
-* Form handling and validation
-* Inventory business logic
-* Order management
-* Git and GitHub
-* API testing with Postman
-* Component-based frontend architecture
