@@ -41,6 +41,36 @@ export default function ProductPage() {
     fetchProducts();
   }, []);
 
+  async function handleDelete(productId: string) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this product?",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Failed to delete product.");
+        return;
+      }
+
+      alert("Product deleted successfully.");
+
+      fetchProducts();
+    } catch (error) {
+      console.error("Failed to delete product:", error);
+      alert("Something went wrong.");
+    }
+  }
+
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -85,6 +115,7 @@ export default function ProductPage() {
           products={products}
           loading={loading}
           onEdit={(product) => setEditingProduct(product)}
+          onDelete={handleDelete}
         />
       </div>
     </main>

@@ -19,6 +19,8 @@ export default function EditProductForm({
   const [formData, setFormData] = useState({
     name: product.name,
     description: product.description,
+    //why String conversion - Because HTML form inputs work with strings, even when the actual data is a number.
+    //<input> has a value attribute that is expected to be handled as a string
     price: String(product.price),
     stock: String(product.stock),
     category: product.category,

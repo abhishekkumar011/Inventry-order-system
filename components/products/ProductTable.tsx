@@ -5,12 +5,14 @@ type ProductTableProps = {
   products: Product[];
   loading: boolean;
   onEdit: (product: Product) => void;
+  onDelete: (productId: string) => void;
 };
 
 export default function ProductTable({
   products,
   loading,
   onEdit,
+  onDelete,
 }: ProductTableProps) {
   if (loading) {
     return (
@@ -132,7 +134,10 @@ export default function ProductTable({
                       Edit
                     </button>
 
-                    <button className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 cursor-pointer">
+                    <button
+                      onClick={() => onDelete(product._id)}
+                      className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                    >
                       Delete
                     </button>
                   </div>
