@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import ProductForm from "./ProductForm";
 import ProductTable from "./ProductTable";
+import EditProductForm from "./EditProductForm";
 
 export type Product = {
   _id: string;
@@ -19,6 +20,7 @@ export default function ProductPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   async function fetchProducts() {
     try {
@@ -59,7 +61,18 @@ export default function ProductPage() {
           </button>
         </div>
 
-        {showForm && (
+        {editingProduct && (
+          <EditProductForm
+            product={editingProduct}
+            onSuccess={() => {
+              setEditingProduct(null);
+              fetchProducts();
+            }}
+            onCancel={() => setEditingProduct(null)}
+          />
+        )}
+
+        {showForm && !editingProduct && (
           <ProductForm
             onSuccess={() => {
               setShowForm(false);
@@ -68,7 +81,11 @@ export default function ProductPage() {
           />
         )}
 
-        <ProductTable products={products} loading={loading} />
+        <ProductTable
+          products={products}
+          loading={loading}
+          onEdit={(product) => setEditingProduct(product)}
+        />
       </div>
     </main>
   );

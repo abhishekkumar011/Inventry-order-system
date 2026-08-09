@@ -4,9 +4,14 @@ import type { Product } from "./ProductPage";
 type ProductTableProps = {
   products: Product[];
   loading: boolean;
+  onEdit: (product: Product) => void;
 };
 
-export default function ProductTable({ products, loading }: ProductTableProps) {
+export default function ProductTable({
+  products,
+  loading,
+  onEdit,
+}: ProductTableProps) {
   if (loading) {
     return (
       <section className="rounded-xl border border-slate-200 bg-white p-10 text-center shadow-sm">
@@ -120,11 +125,14 @@ export default function ProductTable({ products, loading }: ProductTableProps) {
 
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
-                    <button className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+                    <button
+                      onClick={() => onEdit(product)}
+                      className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 cursor-pointer"
+                    >
                       Edit
                     </button>
 
-                    <button className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50">
+                    <button className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 cursor-pointer">
                       Delete
                     </button>
                   </div>
