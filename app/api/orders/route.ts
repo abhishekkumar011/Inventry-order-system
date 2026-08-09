@@ -103,3 +103,26 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    await connectDB();
+
+    const orders = await Order.find().sort({ createdAt: -1 });
+
+    return NextResponse.json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    console.error("GET /api/orders error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to fetch orders",
+      },
+      { status: 500 },
+    );
+  }
+}
